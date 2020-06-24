@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server",
-    "publish": "git subtree push --prefix dist/server server master && git subtree push --prefix dist/client client master"
+    "publish": "git push server master && git push client master"
   },
   "author": "Ben Black",
   "license": "MIT",
