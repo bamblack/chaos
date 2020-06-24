@@ -1,0 +1,26 @@
+{
+  "name": "chaos",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  },
+  "author": "Ben Black",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/lodash": "^4.14.157",
+    "copy-webpack-plugin": "^6.0.2",
+    "ts-loader": "^7.0.5",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "phaser": "^3.23.0"
+  }
+}
