@@ -1,1 +1,1 @@
-web: http-server ./dist/client
+web: http-server ./
