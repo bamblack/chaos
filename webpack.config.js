@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 const clientConfig = {
     target: 'web',
@@ -9,22 +11,32 @@ const clientConfig = {
         vendors: ['lodash', 'phaser']
     },
     output: {
-        path: path.resolve(__dirname, 'dist/client'),
+        path: path.resolve(__dirname, 'dist/public'),
         filename: '[name].bundle.js'
     },
     resolve: {
         extensions: ['.ts', '.js']
     },
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            }
+        ]
+    },
     plugins: [
+        new HtmlWebpackPlugin({
+            title: 'Chaos',
+            template: './src/index.html',
+            filename: 'index.html'
+        }),
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'index.html'),
-                    to: path.resolve(__dirname, 'dist/client')
-                },
-                {
                     from: path.resolve(__dirname, 'assets', '**', '*'),
-                    to: path.resolve(__dirname, 'dist/client')
+                    to: path.resolve(__dirname, 'dist/public')
                 }
             ]
         }),
@@ -45,27 +57,28 @@ const clientConfig = {
         }
     },
     devtool: 'inline-source-map',
-    mode: 'development',
-    devServer: {
-        contentBase: path.resolve(__dirname, 'dist/client'),
-        https: false,
-        open: true,
-        port: 9000
-    }
+    mode: 'development'
 }
 
 const serverConfig = {
     target: 'node',
     entry: './src/server/main.ts',
     output: {
-        path: path.resolve(__dirname, 'dist/server'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'server.bundle.js'
     },
-    devServer: {
-        contentBase: path.resolve(__dirname, 'dist/server'),
-        https: false,
-        open: true,
-        port: 9001
+    externals: [nodeExternals()],
+    node: {
+        __dirname: false
+    },
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            }
+        ]
     }
 }
 
